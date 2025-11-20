@@ -1,0 +1,7 @@
+{
+  "rules": [
+    { "min_score": 0, "max_score": 10, "vrs": 4, "note": "stable" },
+    { "min_score": 11, "max_score": 30, "vrs": 2, "note": "moderate" },
+    { "min_score": 31, "max_score": 999, "vrs": 1, "note": "severe - safe mode" }
+  ]
+}
