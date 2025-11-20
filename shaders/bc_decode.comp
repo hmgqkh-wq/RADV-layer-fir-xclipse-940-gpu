@@ -1,0 +1,15 @@
+#version 450
+// shaders/bc_decode.comp
+// Minimal BC decode compute shader placeholder.
+// This is a conceptual stub. Replace with optimized BC1..BC7 decoders per format.
+
+layout(local_size_x = 8, local_size_y = 8) in;
+
+layout(binding = 0) readonly buffer BCData { uint data[]; } bc;
+layout(binding = 1, rgba8) writeonly uniform image2D outImage;
+
+void main() {
+    ivec2 pix = ivec2(gl_GlobalInvocationID.xy);
+    // simple placeholder: write magenta so we can see fallback in tests
+    imageStore(outImage, pix, vec4(1.0, 0.0, 1.0, 1.0));
+}
