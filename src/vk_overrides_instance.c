@@ -1,26 +1,44 @@
-// src/vk_overrides_instance.c
-// Instance-level wrappers and helpers (lightweight)
-
 #define _GNU_SOURCE
-#include <vulkan/vulkan.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <dlfcn.h>
+#include <vulkan/vulkan.h>
+
+#include "xeno_wrapper.h"
 #include "radv_lite_logger.h"
-#include "radv_lite_profiles.h"
 
-// Example override: we can intercept vkCreateInstance for feature advertisement or layer injection.
-// For brevity this is a minimal pass-through with logging.
+static void* vulkan_handle = NULL;
 
-PFN_vkVoidFunction vkGetInstanceProcAddr_forward(VkInstance instance, const char* pName);
+static void load_real_vulkan() {
+    if (vulkan_handle == NULL) {
+        vulkan_handle = dlopen("libvulkan.so", RTLD_NOW);
+        if (!vulkan_handle) {
+            radv_log("FATAL: Could not load real libvulkan.so");
+        }
+    }
+}
 
-VkResult vkCreateInstance(const VkInstanceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkInstance* pInstance) {
-    radv_log("vkCreateInstance called");
-    typedef VkResult (*PFN_vkCreateInstance)(const VkInstanceCreateInfo*, const VkAllocationCallbacks*, VkInstance*);
-    PFN_vkCreateInstance real_create = (PFN_vkCreateInstance)dlsym(RTLD_NEXT, "vkCreateInstance");
-    if (!real_create) {
-        radv_log("vkCreateInstance: real function missing");
+VKAPI_ATTR VkResult VKAPI_CALL vkCreateInstance(
+    const VkInstanceCreateInfo* pCreateInfo,
+    const VkAllocationCallbacks* pAllocator,
+    VkInstance* pInstance)
+{
+    load_real_vulkan();
+
+    PFN_vkCreateInstance real_vkCreateInstance =
+        (PFN_vkCreateInstance)dlsym(vulkan_handle, "vkCreateInstance");
+
+    if (!real_vkCreateInstance) {
+        radv_log("FATAL: real vkCreateInstance missing");
         return VK_ERROR_INITIALIZATION_FAILED;
     }
-    VkResult r = real_create(pCreateInfo, pAllocator, pInstance);
-    radv_log("vkCreateInstance -> %d", r);
-    return r;
+
+    radv_log("Wrapper: Intercepting vkCreateInstance");
+
+    // Modify layers, features, debug callback injection, etc…
+    // (Wrapper logic can go here.)
+
+    VkResult result = real_vkCreateInstance(pCreateInfo, pAllocator, pInstance);
+
+    return result;
 }
