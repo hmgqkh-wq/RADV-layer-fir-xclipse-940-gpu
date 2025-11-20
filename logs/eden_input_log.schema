@@ -1,0 +1,4 @@
+# eden_input_log.schema
+# Simple schema describing fields our autotune expects to find in LADB logs:
+# timestamp | pid | tid | severity | tag | message
+# The autotune engine scans for messages with "F DEBUG", "Abort", "SIGSEGV", "vkQueuePresentKHR ERROR" and computes instability score.
