@@ -1,0 +1,11 @@
+{
+  "file_format_version": "1.0.0",
+  "layer": {
+    "name": "XclipseAutotune",
+    "type": "implicit",
+    "library_path": "libxclipse_autotune_layer.so",
+    "api_version": "1.4.0",
+    "implementation_version": "1",
+    "description": "Implicit layer that helps autotune and injects debug hooks for Eden."
+  }
+}
