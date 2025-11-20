@@ -9,7 +9,6 @@ add_library(vulkan.xeno_wrapper SHARED
     src/xeno_init.c
     src/vk_getproc_shim.c
     src/vk_overrides_instance.c
-    src/xeno_wrapper.h
 )
 
 target_include_directories(vulkan.xeno_wrapper PRIVATE
