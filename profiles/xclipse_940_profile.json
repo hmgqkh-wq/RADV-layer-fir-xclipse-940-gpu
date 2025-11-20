@@ -1,0 +1,32 @@
+{
+  "profile_name": "xclipse_940",
+  "gpu_arch": "RDNA3",
+  "compute_units": 12,
+  "shader_units": 768,
+  "rt_cores": 6,
+  "subgroup_size": [32, 64],
+  "hardware_rt": true,
+  "hardware_bc": true,
+  "defaults": {
+    "ray_tracing": {
+      "enabled": true,
+      "max_recursion_depth": 2,
+      "max_payload_size": 128,
+      "stack_size_caps": "balanced"
+    },
+    "mesh_shading": {
+      "enabled": true,
+      "max_meshlets_per_draw": 256,
+      "task_ring_size_kb": 512
+    },
+    "vrs": {
+      "enabled": true,
+      "default_rate": "2x2",
+      "per_title_exceptions": true
+    },
+    "stability": {
+      "robust_buffer_access": true,
+      "synchronization2": true
+    }
+  }
+}
