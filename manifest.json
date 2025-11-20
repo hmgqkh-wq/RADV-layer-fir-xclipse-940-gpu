@@ -1,0 +1,136 @@
+{
+  "name": "xclipse-940",
+  "driver": "libvulkan.xeno_wrapper.so",
+  "entrypoint": "xeno_init",
+  "target": "vulkan1.4",
+  "gpu_arch": "RDNA3",
+  "backend": "radv-lite",
+  "eden_integration": {
+    "eden_package": "dev.eden.eden_emulator",
+    "eden_driver_path": "/data/data/dev.eden.eden_emulator/files/gpu_drivers",
+    "eden_private_log_dir": "/data/data/dev.eden.eden_emulator/files/gpu_logs",
+    "fallback_install_path": "/sdcard/eden_wrapper_logs"
+  },
+  "features": {
+    "spirv_embedded": true,
+    "pipeline_cache": true,
+    "async_compile": true,
+    "auto_tuning": true,
+    "hud_overlay": true,
+    "ray_tracing": true,
+    "mesh_shading": true,
+    "variable_rate_shading": true,
+    "primitive_shaders": true,
+    "descriptor_indexing": true,
+    "buffer_device_address": true,
+    "timeline_semaphores": true,
+    "dynamic_rendering": true,
+    "robust_buffer_access": true,
+    "pipeline_library": true,
+    "shader_object": true,
+    "subgroup_operations": true,
+    "pipeline_executable_properties": true,
+    "synchronization2": true,
+    "memory_budget": true,
+    "delta_color_compression": true,
+    "sampler_feedback": true,
+    "sparse_residency": true,
+    "cooperative_matrix": true,
+    "wave_matrix_ops": true,
+    "multi_queue_async": true,
+    "opengl_es_3_2": true,
+    "opencl_compute": false,
+    "directx12_layer": false,
+    "bc_texture_formats": {
+      "BC1": "hardware",
+      "BC2": "hardware",
+      "BC3": "hardware",
+      "BC4": "hardware",
+      "BC5": "hardware",
+      "BC6H": "hardware",
+      "BC7": "hardware"
+    },
+    "bc_fallback_shaders": true,
+    "render_modes": {
+      "gmem_rendering": true,
+      "sysmem_rendering": true
+    }
+  },
+  "vulkan_extensions": {
+    "core": ["VK_VERSION_1_4"],
+    "device": [
+      "VK_KHR_acceleration_structure",
+      "VK_KHR_ray_tracing_pipeline",
+      "VK_KHR_deferred_host_operations",
+      "VK_KHR_buffer_device_address",
+      "VK_EXT_descriptor_indexing",
+      "VK_KHR_timeline_semaphore",
+      "VK_KHR_dynamic_rendering",
+      "VK_EXT_mesh_shader",
+      "VK_KHR_maintenance5",
+      "VK_KHR_shader_float16_int8",
+      "VK_KHR_shader_subgroup_extended_types",
+      "VK_EXT_shader_demote_to_helper_invocation",
+      "VK_KHR_pipeline_library",
+      "VK_KHR_pipeline_executable_properties",
+      "VK_EXT_vertex_input_dynamic_state",
+      "VK_EXT_extended_dynamic_state3",
+      "VK_EXT_shader_object",
+      "VK_EXT_shader_atomic_float",
+      "VK_KHR_synchronization2",
+      "VK_EXT_memory_budget",
+      "VK_EXT_subgroup_size_control"
+    ]
+  },
+  "profiles": {
+    "xclipse_940": {
+      "gpu_arch": "RDNA3",
+      "compute_units": 12,
+      "shader_units": 768,
+      "rt_cores": 6,
+      "subgroup_size": [32, 64],
+      "fp16_flops": "3.6 TFLOPS",
+      "fp32_flops": "1.8 TFLOPS",
+      "defaults": {
+        "ray_tracing": {
+          "enabled": true,
+          "hardware": true,
+          "max_recursion_depth": 2,
+          "max_payload_size": 128,
+          "stack_size_caps": "balanced"
+        },
+        "mesh_shading": {
+          "enabled": true,
+          "hardware": true,
+          "max_meshlets_per_draw": 256,
+          "task_ring_size_kb": 512
+        },
+        "vrs": {
+          "enabled": true,
+          "default_rate": "2x2",
+          "per_title_exceptions": true
+        },
+        "stability": {
+          "robust_buffer_access": true,
+          "synchronization2": true
+        }
+      }
+    }
+  },
+  "layers": {
+    "icd": "usr/share/vulkan/icd.d/xeno_wrapper.json",
+    "implicit": [
+      "usr/share/vulkan/implicit_layer.d/xclipse_autotune.json"
+    ],
+    "explicit": [
+      "usr/share/vulkan/explicit_layer.d/xclipse_debughud.json"
+    ]
+  },
+  "notes": {
+    "gpu_family": "Xclipse 940 (Exynos 2400e, RDNA3-class)",
+    "bc_texture_formats": "BC1-BC7 hardware supported; fallback shader decoders available if vendor API unavailable.",
+    "rdna3_tuning": "Prefer subgroup sizes of 32/64; use shared memory tiling for BC decode; use wave intrinsics for RT packet traversal.",
+    "power_profile": "Provide balanced/performance/power personas through personality loader.",
+    "storage_note": "Primary log/config path (eden private): /data/data/dev.eden.eden_emulator/files/gpu_drivers/ ; fallback: /sdcard/eden_wrapper_logs/"
+  }
+}
