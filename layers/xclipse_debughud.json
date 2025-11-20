@@ -1,0 +1,11 @@
+{
+  "file_format_version": "1.0.0",
+  "layer": {
+    "name": "XclipseDebugHUD",
+    "type": "explicit",
+    "library_path": "libxclipse_debughud_layer.so",
+    "api_version": "1.4.0",
+    "implementation_version": "1",
+    "description": "Explicit HUD layer to show FPS, VRS, RT usage, profile name."
+  }
+}
