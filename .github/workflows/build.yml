@@ -32,7 +32,7 @@ jobs:
 
     - name: Build Wrapper
       run: |
-        cmake --build build --target xeno_wrapper --config Release
+        cmake --build build --target vulkan.xeno_wrapper --config Release
 
     - name: Prepare ZIP structure
       run: |
@@ -42,4 +42,10 @@ jobs:
         cp -r profiles output/xclipse940/
         cp -r layers output/xclipse940/
         cp -r shaders output/xclipse940/
-        cd output && zip -
+        cd output && zip -r xclipse940_wrapper.zip xclipse940
+
+    - name: Upload Wrapper ZIP
+      uses: actions/upload-artifact@v4
+      with:
+        name: xclipse940_wrapper
+        path: output/xclipse940_wrapper.zip
