@@ -1,0 +1,7 @@
+// shaders/mesh_emulation.comp
+// Compute stub to emulate mesh shading outputs (placeholder)
+#version 450
+layout(local_size_x = 64) in;
+void main() {
+    // Emulation placeholder
+}
